@@ -34,7 +34,19 @@ class Person{
 	Person(String name){
 		this('F',name,25);
 	}
+	
+	Person(char gender,String name){
+		this(gender,name,25);
+	}
 
+	Person(String name,int age){
+		this('F',name,age);
+	}
+	
+	Person(char gender,int age){
+		this(gender,"NONAME",age);
+	}
+	
 	public Person(char gender, String name, int age) {
 		this();
 		if(gender=='M'||gender=='F'||gender=='T'||gender=='m'||gender=='f'||gender=='t'){
