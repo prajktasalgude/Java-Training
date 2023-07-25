@@ -1,0 +1,15 @@
+
+
+
+						Furniture		<--------Interface
+						   |
+		----------------------------------------------------------------------------
+		|				   |   					|
+		Living Room		    Office Furniture			 Kitchen Furniture	<-----Abstract classes
+		|				   |					|
+		|          			   |       				|
+	|	|				   |					|	      	
+		|   	     	       		   |					|
+	   Centre Table				Study Table			  Dining Table 		<--------Inherited classes
+	     TV Unit				Office Chair			  Kitchen Trolly
+	      Sofa
