@@ -2,45 +2,179 @@
 public class WashingMachineTest {
 	public static void main(String[] args) {
 		
-		WashingPowder washPowder = new WashingPowder(100,"Nirma", "Front Load", true, 10.0f);
+		try {
+			WashingMachine washingMachine1=new WashingMachine();
+			WashingMachine washingMachine2=new WashingMachine();
+			WashingMachine washingMachine3=new WashingMachine();
+			washingMachine1.start();	
+			washingMachine2.start();
+			washingMachine3.start();
+		}
 		
-		System.out.println("wash powder : "+washPowder); //toString is invoked
+		catch (ClothsOverloadException ex1){
+			System.out.println("Cloths overload issue : "+ex1);
+		}
 		
-		Cloth cloth[]=new Cloth[3];
-		cloth[0]=new Cloth("Silk","Yellow",1500,"Kurti",false);
-		cloth[1]=new Cloth("Polyster","Sky Blue",500,"T Shirt",false);
-		cloth[2]=new Cloth("Semi-Cotton","Pink",2500,"Pant",false);
-		Water water=new Water("Soft",25,"40C");
-		Electricity elect=new Electricity("ac",220f,18,5,"Adani");
+		catch (DoorNotClosedException ex2){
+			System.out.println("Open door issue : "+ex2);
+		}
 		
-		WashingMachine washingMachine=new WashingMachine();
-		Laundry laundry=washingMachine.wash(washPowder,water,elect,cloth);
-		laundry.showLaundryDetails();
-		System.out.println(laundry.toString());
+		System.out.println("--------------------------");
+		
+//		try {
+//			WashingMachine washingMachine2=new WashingMachine();
+//			washingMachine2.start();
+//		}
+//		
+//		catch (ClothsOverloadException ex1){
+//			System.out.println("Cloths overload issue : "+ex1);
+//		}
+//		
+//		catch (DoorNotClosedException ex2){
+//			System.out.println("Open door issue : "+ex2);
+//		}
+//		
+//		System.out.println("--------------------------");
+//		
+//		try {
+//			WashingMachine washingMachine3=new WashingMachine();
+//			washingMachine3.start();
+//		}
+//		
+//		catch (ClothsOverloadException ex1){
+//			System.out.println("Cloths overload issue : "+ex1);
+//		}
+//		
+//		catch (DoorNotClosedException ex2){
+//			System.out.println("Open door issue : "+ex2);
+//		}
+	}
+}
+
+class ClothsOverloadException extends Exception 
+{
+	ClothsOverloadException(String msg) {
+		super(msg);
+	}
+}
+
+class DoorNotClosedException extends Exception 
+{
+	DoorNotClosedException(String msg) {
+		super(msg);
+	}
+}
+
+class LowVoltageException extends RuntimeException 
+{
+	LowVoltageException(String msg) {
+		super(msg);
+	}
+}
+
+class WaterSupplyException extends RuntimeException 
+{
+	WaterSupplyException(String msg) {
+		super(msg);
+	}
+}
+
+class WaterDrainageException extends RuntimeException 
+{
+	WaterDrainageException(String msg) {
+		super(msg);
 	}
 }
 
 class Machine {
 	
 }
-class WashingMachine extends Machine { //isA
-	
-	WashingTub washTub = new WashingTub(7,"Metal"); //hasA
 
+class WashingMachine extends Machine implements Runnable { 
+	private boolean clothsOverload=false;
+	private boolean doorNotClosed=false;
+	Runnable runnable;
 	
-		Laundry wash(WashingPowder washPowder, Water water, Electricity elect, Cloth cloth[]) {
-			
-			Laundry laundry=new Laundry();
-			laundry.setNumberOfCloths(cloth.length);
-			laundry.setTimeRequired(1.7f);
-			laundry.setWaterUsed(water.getQuantity());
-			laundry.setElectricityUsed(elect.getUnitUsed());
-			laundry.setCostOfWashingPowder(washPowder.getPrice());
-			float cost=washPowder.getPrice()+(elect.getUnitUsed()*elect.getCostPerUnit());
-			laundry.setTotalCost(cost);
-			laundry.setCostPerCloth(cost/cloth.length);
-			return laundry;
+	WashingMachine() throws ClothsOverloadException, DoorNotClosedException {
+		
+		double value= Math.random()%10;
+		
+		if(value<0.10) {
+			clothsOverload=true;
 		}
+		else {
+			System.out.println("Cloths are sufficient...!!!");
+		}
+		
+		if(clothsOverload==true) {
+			ClothsOverloadException ex = new ClothsOverloadException("Cloths are overloaded please remove some cloths...");
+			throw ex;
+		}
+		
+		double value2= Math.random()%10;
+		if(value2<0.10) {
+			doorNotClosed=true;
+		}
+		else {
+			System.out.println("Door is closed machine is starting...!!!");
+		}
+		
+		//runnable=this;
+	}
+	
+	public void start() {
+		run();
+		
+	}
+
+	WashingTub washTub = new WashingTub(7,"Metal"); //hasA
+	
+	Laundry wash(WashingPowder washPowder, Water water, Electricity elect, Cloth cloth[]) {
+		
+		double value = Math.random()%10;
+		if(value>0.96) {
+			LowVoltageException ex1 = new LowVoltageException("Low voltage issue....");
+			throw ex1;
+		}
+		else if(value>0.65 && value <=0.70) {
+			WaterSupplyException ex1 = new WaterSupplyException("Water is not sufficient.......");
+			throw ex1;
+		}
+		else if(value>0.65 && value <=0.70) {
+			WaterDrainageException ex1 = new WaterDrainageException("Some drainage problem occured.......");
+			throw ex1;
+		}
+		
+		Laundry laundry=new Laundry();
+		laundry.setNumberOfCloths(cloth.length);
+		laundry.setTimeRequired(1.7f);
+		laundry.setWaterUsed(water.getQuantity());
+		laundry.setElectricityUsed(elect.getUnitUsed());
+		laundry.setCostOfWashingPowder(washPowder.getPrice());
+		float cost=washPowder.getPrice()+(elect.getUnitUsed()*elect.getCostPerUnit());
+		laundry.setTotalCost(cost);
+		laundry.setCostPerCloth(cost/cloth.length);
+		return laundry;
+	}
+
+	@Override
+	public void run() {
+		
+		Cloth cloth[]=new Cloth[3];
+		cloth[0]=new Cloth("Silk","Yellow",1500,"Kurti",false);
+		cloth[1]=new Cloth("Polyster","Sky Blue",500,"T Shirt",false);
+		cloth[2]=new Cloth("Semi-Cotton","Pink",2500,"Pant",false);
+		
+		Water water=new Water("Soft",25,"40C");
+		Water water1=new Water("Hard",26,"40C");
+		Water water2=new Water("Normal",2,"40C");
+		Electricity elect=new Electricity("ac",220f,18,5,"Adani");
+		WashingPowder washPowder = new WashingPowder(100,"Nirma", "Front Load", true, 10.0f);
+		Laundry laundry1=this.wash(washPowder,water,elect,cloth);
+		System.out.println("--------------------------");
+		//laundry1.showLaundryDetails();
+		System.out.println(laundry1);
+	}
 }
 
 class Laundry {
