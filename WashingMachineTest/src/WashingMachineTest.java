@@ -18,36 +18,7 @@ public class WashingMachineTest {
 		catch (DoorNotClosedException ex2){
 			System.out.println("Open door issue : "+ex2);
 		}
-		
-		System.out.println("--------------------------");
-		
-//		try {
-//			WashingMachine washingMachine2=new WashingMachine();
-//			washingMachine2.start();
-//		}
-//		
-//		catch (ClothsOverloadException ex1){
-//			System.out.println("Cloths overload issue : "+ex1);
-//		}
-//		
-//		catch (DoorNotClosedException ex2){
-//			System.out.println("Open door issue : "+ex2);
-//		}
-//		
-//		System.out.println("--------------------------");
-//		
-//		try {
-//			WashingMachine washingMachine3=new WashingMachine();
-//			washingMachine3.start();
-//		}
-//		
-//		catch (ClothsOverloadException ex1){
-//			System.out.println("Cloths overload issue : "+ex1);
-//		}
-//		
-//		catch (DoorNotClosedException ex2){
-//			System.out.println("Open door issue : "+ex2);
-//		}
+
 	}
 }
 
@@ -377,8 +348,7 @@ class WashingPowder extends Powder { // isA
 
 	public void setPrice(float price) {
 		this.price = price;
-	}
-	
+	}	
 	
 }
 
@@ -468,8 +438,6 @@ class Electricity {
 		this.supplier = supplier;
 	}
 	
-	
-	
 }
 
 class Cloth {
@@ -522,7 +490,5 @@ class Cloth {
 	public void setClean(boolean clean) {
 		this.clean = clean;
 	}
-	
-
-	
+		
 }
