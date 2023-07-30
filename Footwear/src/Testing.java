@@ -11,23 +11,10 @@ import java.util.Iterator;
 import Shopping.Sandle;
 import Shopping.Shoes;
 import Shopping.Shop;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.SQLException;
+
 public class Testing {
 
-	public static void main(String[] args) {
-//		String url="jdbc:mysql://localhost:3306/customer";
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			Connection con=DriverManager.getConnection(url);
-//		} 
-//		catch (ClassNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		
+	public static void main(String[] args) {		
 		ArrayList customerList = new ArrayList();
 		
 		Shop shoe=new Shoes(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx", 1500,"Yes","Broad","Black");
@@ -171,80 +158,39 @@ class Customer extends Thread{
 		buy.setProduct(shop.getClass().getSimpleName());
 		buy.setPrice(shop.getPrice());
 		
-//		try {
-//			
-//			//System.out.println("Trying to load the driver...");
-//			//DriverManager.registerDriver(new org.hsqldb.jdbc.JDBCDriver());
-//			//System.out.println("Driver loaded....");
-//			
-			try {
-				//1. Load the Driver
-				Class.forName("org.hsqldb.jdbc.JDBCDriver");
-				
-				//2. Acquire the connection
-				Connection conn = 	DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb","SA","");
-				
-				//3. make a desired statement (insert/update/delete/select)
-				PreparedStatement pst = 
-						conn.prepareStatement("INSERT INTO SALESINFO VALUES (?,?,?,?)");
-				
-				pst.setString(1, buy.getCustomerName());
-				if(this.gender=='F'||this.gender=='f') {
-					pst.setString(2, "Female");
-				}
-				else if(this.gender=='M'||this.gender=='m') {
-					pst.setString(2, "Male");
-				}
-				pst.setString(3, buy.getProduct());
-				pst.setInt(4,buy.getPrice());
-				
-				System.out.println("PreparedStatement is created : "+ pst);
-				
-				//4. execute that statement //  UR TABLENAME IS MYDEPT120
-				int rows = pst.executeUpdate();
-				
-				System.out.println("Rows created : "+rows);
-				
-				//6. close the statement, and connection
-				
-				pst.close();
-				conn.close();
-			} 
-//			
-//			//2. Acquire the connection
-//			System.out.println("Trying to connect....");
-//			Connection conn = 	DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/mydb");
-//			System.out.println("Connected : "+ conn);
-//			
-//			//3. make a desired statement (insert/update/delete/select)
-//			
-//			PreparedStatement pst = 
-//					conn.prepareStatement("INSERT INTO SHOPINFO VALUES (?,?,?,?)");
-//			
-//			pst.setString(1, buy.getCustomerName());
-//			if(this.gender=='F'||this.gender=='f') {
-//				pst.setString(2, "Female");
-//			}
-//			else if(this.gender=='M'||this.gender=='m') {
-//				pst.setString(2, "Male");
-//			}
-//			pst.setString(3, buy.getProduct());
-//			pst.setInt(4,buy.getPrice());
-//			
-//			System.out.println("PreparedStatement is created : "+ pst);
-//			
-//			//4. execute that statement //  UR TABLENAME IS MYDEPT120
-//			int rows = pst.executeUpdate();
-//			
-//			System.out.println("Rows created : "+rows);
-//			
-//			//6. close the statement, and connection
-//			
-//			pst.close();
-//			conn.close();
-//			System.out.println("Disconnected from the database....");
-//			
-//		} 
+		try {
+			//1. Load the Driver
+			Class.forName("org.hsqldb.jdbc.JDBCDriver");
+			
+			//2. Acquire the connection
+			Connection conn = 	DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb","SA","");
+			
+			//3. make a desired statement (insert/update/delete/select)
+			PreparedStatement pst = 
+					conn.prepareStatement("INSERT INTO SALESINFO VALUES (?,?,?,?)");
+			
+			pst.setString(1, buy.getCustomerName());
+			if(this.gender=='F'||this.gender=='f') {
+				pst.setString(2, "Female");
+			}
+			else if(this.gender=='M'||this.gender=='m') {
+				pst.setString(2, "Male");
+			}
+			pst.setString(3, buy.getProduct());
+			pst.setInt(4,buy.getPrice());
+			
+			System.out.println("PreparedStatement is created : "+ pst);
+			
+			//4. execute that statement //  UR TABLENAME IS MYDEPT120
+			int rows = pst.executeUpdate();
+			
+			System.out.println("Rows created : "+rows);
+			
+			//6. close the statement, and connection
+			
+			pst.close();
+			conn.close();
+		} 
 		catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -253,11 +199,7 @@ class Customer extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-//		catch (ClassNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
+
 		return buy;
 	}
 
