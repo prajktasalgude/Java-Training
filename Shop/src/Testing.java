@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager; // all methods throws SQLException
+import java.sql.DriverManager; 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.Iterator;
 import Shopping.Sandle;
 import Shopping.Shoes;
 import Shopping.Shop;
+import Shopping.Watch;
 
 public class Testing {
 
@@ -18,9 +19,14 @@ public class Testing {
 		ArrayList customerList = new ArrayList();
 		
 		Shop shoe=new Shoes(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx", 1500,"Yes","Broad","Black");
-		Shop sandle=new Sandle(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx",400);
+		Shop sandle=new Sandle(203, "Goyal Footwear", "High heels", 6, "Bata",400);
+		Shop watch=new Watch("Bharat Watch","Smart watch", "Ladies", 3000);
+		shoe.welcome();
+		sandle.welcome();
+		watch.welcome();
+		
 		Customer customer1=new Customer('F', "Seeta","card",shoe);
-		Customer customer2=new Customer('m', "Ganesh","online",shoe);
+		Customer customer2=new Customer('m', "Ganesh","online",watch);
 		Customer customer3=new Customer('F', "Rita","cash",sandle);
 		
 		customerList.add(customer1);
@@ -208,8 +214,6 @@ class Customer extends Thread{
 		return "Customer [gender=" + gender + ", name=" + name + ", paymentType=" + paymentType + ", shop=" + shop
 				+ "]";
 	}
-	
-	
 	
 }
 

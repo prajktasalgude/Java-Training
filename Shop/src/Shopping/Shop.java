@@ -1,6 +1,7 @@
 package Shopping;
 
 public interface Shop{
+	static String city="Pune";
 	void welcome();
 	int getPrice();
 }
