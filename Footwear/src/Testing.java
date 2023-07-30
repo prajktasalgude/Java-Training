@@ -1,14 +1,74 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager; // all methods throws SQLException
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import Shopping.Sandle;
 import Shopping.Shoes;
 import Shopping.Shop;
-import Shopping.Sandle;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.SQLException;
 public class Testing {
 
 	public static void main(String[] args) {
-		Shop shoe=new Shoes(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx", 1500,"yes","Broad","Black");
+//		String url="jdbc:mysql://localhost:3306/customer";
+//		try {
+//			Class.forName("com.mysql.cj.jdbc.Driver");
+//			Connection con=DriverManager.getConnection(url);
+//		} 
+//		catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
+		ArrayList customerList = new ArrayList();
+		
+		Shop shoe=new Shoes(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx", 1500,"Yes","Broad","Black");
 		Shop sandle=new Sandle(203, "Goyal Footwear", "Sports Shoes", 7, "Sparx",400);
 		Customer customer1=new Customer('F', "Seeta","card",shoe);
 		Customer customer2=new Customer('m', "Ganesh","online",shoe);
 		Customer customer3=new Customer('F', "Rita","cash",sandle);
+		
+		customerList.add(customer1);
+		customerList.add(customer2);
+		customerList.add(customer3);
+		
+		Iterator logIterator = customerList.iterator();
+		
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream("customer.txt", false); //true means append to the file
+
+			//System.out.println("File is ready to write...");
+			String str="";
+			while(logIterator.hasNext()) {
+				Customer x = (Customer) logIterator.next(); //cast it to Log, as it was added as an Object
+				str=x.toString()+"\n";
+				byte array[] = str.getBytes(); //converts the string into a byte array
+				fileOutputStream.write(array);
+			}
+			
+			//System.out.println("String is written to the file");
+
+			fileOutputStream.close();
+			//System.out.println("File is closed now...");
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		
+		
 		customer1.start();
 		customer2.start();
 		customer3.start();	
@@ -110,8 +170,104 @@ class Customer extends Thread{
 		buy.setCustomerName(this.name);
 		buy.setProduct(shop.getClass().getSimpleName());
 		buy.setPrice(shop.getPrice());
+		
+//		try {
+//			
+//			//System.out.println("Trying to load the driver...");
+//			//DriverManager.registerDriver(new org.hsqldb.jdbc.JDBCDriver());
+//			//System.out.println("Driver loaded....");
+//			
+			try {
+				//1. Load the Driver
+				Class.forName("org.hsqldb.jdbc.JDBCDriver");
+				
+				//2. Acquire the connection
+				Connection conn = 	DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb","SA","");
+				
+				//3. make a desired statement (insert/update/delete/select)
+				PreparedStatement pst = 
+						conn.prepareStatement("INSERT INTO SALESINFO VALUES (?,?,?,?)");
+				
+				pst.setString(1, buy.getCustomerName());
+				if(this.gender=='F'||this.gender=='f') {
+					pst.setString(2, "Female");
+				}
+				else if(this.gender=='M'||this.gender=='m') {
+					pst.setString(2, "Male");
+				}
+				pst.setString(3, buy.getProduct());
+				pst.setInt(4,buy.getPrice());
+				
+				System.out.println("PreparedStatement is created : "+ pst);
+				
+				//4. execute that statement //  UR TABLENAME IS MYDEPT120
+				int rows = pst.executeUpdate();
+				
+				System.out.println("Rows created : "+rows);
+				
+				//6. close the statement, and connection
+				
+				pst.close();
+				conn.close();
+			} 
+//			
+//			//2. Acquire the connection
+//			System.out.println("Trying to connect....");
+//			Connection conn = 	DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/mydb");
+//			System.out.println("Connected : "+ conn);
+//			
+//			//3. make a desired statement (insert/update/delete/select)
+//			
+//			PreparedStatement pst = 
+//					conn.prepareStatement("INSERT INTO SHOPINFO VALUES (?,?,?,?)");
+//			
+//			pst.setString(1, buy.getCustomerName());
+//			if(this.gender=='F'||this.gender=='f') {
+//				pst.setString(2, "Female");
+//			}
+//			else if(this.gender=='M'||this.gender=='m') {
+//				pst.setString(2, "Male");
+//			}
+//			pst.setString(3, buy.getProduct());
+//			pst.setInt(4,buy.getPrice());
+//			
+//			System.out.println("PreparedStatement is created : "+ pst);
+//			
+//			//4. execute that statement //  UR TABLENAME IS MYDEPT120
+//			int rows = pst.executeUpdate();
+//			
+//			System.out.println("Rows created : "+rows);
+//			
+//			//6. close the statement, and connection
+//			
+//			pst.close();
+//			conn.close();
+//			System.out.println("Disconnected from the database....");
+//			
+//		} 
+		catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+//		catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		return buy;
 	}
+
+	@Override
+	public String toString() {
+		return "Customer [gender=" + gender + ", name=" + name + ", paymentType=" + paymentType + ", shop=" + shop
+				+ "]";
+	}
+	
+	
 	
 }
 

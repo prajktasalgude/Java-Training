@@ -1,0 +1,3 @@
+Customer [gender=F, name=Seeta, paymentType=card, shop=Shopping.Shoes@1c2c22f3]
+Customer [gender=m, name=Ganesh, paymentType=online, shop=Shopping.Shoes@1c2c22f3]
+Customer [gender=F, name=Rita, paymentType=cash, shop=Sandle [heelsType=Sports Shoes, size=7, brand=Sparx, price=400]]
