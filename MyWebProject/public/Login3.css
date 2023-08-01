@@ -1,0 +1,20 @@
+	@charset "ISO-8859-1";
+	body {
+	
+	text-align: center	
+}
+	
+	h1{
+			background-color: crimson; 
+			color: aqua;}
+		h2{
+			color:blue;
+		}
+		label{
+			color:blue;
+		}
+		button{
+			padding : 15px; 
+			background-color: cadetblue;
+			font-size: 20px;
+		}
